@@ -1,0 +1,46 @@
+using UnityEngine;
+using UnityEngine.UI;
+
+public class CategoryButtonManager : MonoBehaviour
+{
+    [System.Serializable]
+    public class CategoryButton
+    {
+        public Button button;          
+        public Image icon;              
+        public Sprite activeSprite;     
+        public Sprite inactiveSprite;   
+    }
+
+    public CategoryButton[] categoryButtons; 
+    private int activeButtonIndex = -1;      
+
+    private void Start()
+    {
+        
+        for (int i = 0; i < categoryButtons.Length; i++)
+        {
+            int index = i; 
+            categoryButtons[i].button.onClick.AddListener(() => OnCategoryButtonClicked(index));
+        }
+    }
+
+    public void OnCategoryButtonClicked(int index)
+    {
+        
+        if (activeButtonIndex == index) return;
+
+        
+        for (int i = 0; i < categoryButtons.Length; i++)
+        {
+            bool isActive = i == index;
+
+           
+            categoryButtons[i].icon.sprite = isActive ? categoryButtons[i].activeSprite : categoryButtons[i].inactiveSprite;
+        }
+
+        
+        activeButtonIndex = index;
+
+    }
+}
